@@ -112,17 +112,19 @@
 
   /* ===== Faixa de logos das marcas ===== */
   .faixa-logos{padding-block:52px;background:var(--branco);border-block:1px solid var(--borda);overflow:hidden}
-  .faixa-titulo{text-align:center;margin:0 0 26px;font-size:.5rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--texto-suave)}
+  .faixa-titulo{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 30px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.24em;color:var(--texto-suave)}
+  .faixa-titulo::before,.faixa-titulo::after{content:"";width:64px;height:1px;background:var(--borda)}
   .logos-janela{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
   .logos-trilho{display:flex;width:max-content;animation:logos-direita-esquerda 45s linear infinite}
   @keyframes logos-direita-esquerda{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .faixa-logos:hover .logos-trilho{animation-play-state:paused}
-  .logo-item{flex:0 0 auto;margin-right:11px;width:59px;height:59px;border-radius:50%;background:var(--branco);border:1px solid var(--borda);box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-weight:800;font-size:.5rem;line-height:1.2;color:var(--texto-suave)}
-  .logo-item img{display:block;max-width:35px;max-height:35px;width:auto;height:auto;object-fit:contain}
+  .logo-item{flex:0 0 auto;margin-right:24px;width:76px;height:76px;border-radius:50%;background:var(--branco);border:1px solid var(--borda);box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;padding:14px;overflow:hidden;text-align:center;font-weight:800;font-size:.5rem;line-height:1.2;color:var(--texto-suave)}
+  .logo-item img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
   .logo-sem-imagem{color:var(--terracota)}
   @media (max-width:600px){
-    .logo-item{width:48px;height:48px;padding:6px;margin-right:8px}
-    .logo-item img{max-width:30px;max-height:30px}
+    .logo-item{width:62px;height:62px;padding:10px;margin-right:16px}
+    .faixa-titulo{letter-spacing:.18em;font-size:.7rem}
+    .faixa-titulo::before,.faixa-titulo::after{width:36px}
   }
   @media (prefers-reduced-motion:reduce){
     .logos-trilho{width:auto;flex-wrap:wrap;justify-content:center;gap:18px 22px}
