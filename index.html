@@ -99,10 +99,6 @@
   .selo-novo{position:absolute;top:-18px;right:-12px;width:96px;height:96px;border-radius:50%;background:var(--musgo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;box-shadow:var(--sombra);transform:rotate(12deg);border:3px dashed rgba(255,255,255,.45)}
   .etiqueta-capa{position:absolute;left:-18px;bottom:40px;background:#fff;border-radius:var(--raio-sm);padding:12px 16px;box-shadow:var(--sombra-forte);font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:10px}
   .etiqueta-capa .estrelas{color:#e8a500}
-  .faixa-marcas{margin-top:80px;border-top:1px solid var(--borda);border-bottom:1px solid var(--borda);background:#fff;overflow:hidden;padding:16px 0}
-  .faixa-marcas .trilho{display:flex;gap:44px;width:max-content;animation:rolar 40s linear infinite}
-  .faixa-marcas span{font-weight:800;font-size:1rem;color:#8f7a6d;white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:44px}
-  .faixa-marcas span::after{content:"✦";color:var(--terracota);font-size:.8rem}
   @keyframes rolar{to{transform:translateX(-50%)}}
 
   /* ===== Sobre ===== */
@@ -113,6 +109,25 @@
   .promessas li{display:flex;align-items:center;gap:14px;background:var(--gelo);border-radius:var(--raio-sm);padding:14px 18px;font-weight:700}
   .promessas li::before{content:"✓";flex:0 0 32px;height:32px;border-radius:50%;background:var(--terracota);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
   .assinatura{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:2.2rem;color:var(--terracota);margin:0}
+
+  /* ===== Faixa de logos das marcas ===== */
+  .faixa-logos{padding-block:52px;background:var(--branco);border-block:1px solid var(--borda);overflow:hidden}
+  .faixa-titulo{text-align:center;margin:0 0 26px;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--texto-suave)}
+  .logos-janela{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+  .logos-trilho{display:flex;width:max-content;animation:logos-direita-esquerda 45s linear infinite}
+  @keyframes logos-direita-esquerda{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .faixa-logos:hover .logos-trilho{animation-play-state:paused}
+  .logo-item{flex:0 0 auto;margin-right:22px;width:118px;height:118px;border-radius:50%;background:var(--branco);border:1px solid var(--borda);box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font-weight:800;font-size:.9rem;line-height:1.2;color:var(--texto-suave)}
+  .logo-item img{display:block;max-width:70px;max-height:70px;width:auto;height:auto;object-fit:contain}
+  .logo-sem-imagem{color:var(--terracota)}
+  @media (max-width:600px){
+    .logo-item{width:96px;height:96px;padding:18px;margin-right:16px}
+    .logo-item img{max-width:60px;max-height:60px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .logos-trilho{width:auto;flex-wrap:wrap;justify-content:center;gap:18px 22px}
+    .logo-item{margin-right:0}
+  }
 
   /* ===== Destaques ===== */
   .destaques-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -258,7 +273,6 @@
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none!important;transition:none!important}
     .revelar{opacity:1;transform:none}
-    .faixa-marcas .trilho{flex-wrap:wrap;width:auto;justify-content:center;gap:16px 32px;padding:0 20px}
   }
 </style>
 </head>
@@ -314,10 +328,6 @@
       </div>
     </div>
 
-    <!-- Faixa de marcas: os nomes vêm do array "marcas" no script -->
-    <div class="faixa-marcas" aria-label="Marcas com quem já trabalhei">
-      <div class="trilho" id="trilho-marcas"></div>
-    </div>
   </section>
 
   <!-- ===================== 2. SOBRE MIM ===================== -->
@@ -339,6 +349,15 @@
         </ul>
         <p class="assinatura">Débora de Oliveira</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAIXA DE LOGOS DAS MARCAS ===================== -->
+  <!-- As logos vêm do array "marcas" no script. Para trocar, envie a imagem para a pasta "logos" do repositório. -->
+  <section class="faixa-logos" aria-labelledby="titulo-logos">
+    <p class="faixa-titulo" id="titulo-logos">Marcas que confiam no meu trabalho</p>
+    <div class="logos-janela">
+      <div class="logos-trilho" id="trilho-logos"></div>
     </div>
   </section>
 
@@ -499,10 +518,25 @@
    Tudo que está escrito "XX" ou "TROCAR" é placeholder para você preencher.
    ===================================================================== */
 
-/* Marcas que aparecem na faixa da capa */
+/* Marcas da faixa de logos (entre "Sobre mim" e "Conteúdos de destaque").
+   "nome": aparece no lugar da logo se a imagem ainda não existir.
+   "arquivo": caminho da logo. Envie a imagem para a pasta "logos" do repositório com esse nome exato.
+   Use PNG com fundo transparente, de preferência com uns 400 px de largura. */
 const marcas = [
-  "CIF", "La Cor Tricot", "OMO", "Collum", "Elseve", "Avène", "Sua Costura",
-  "Serenature Cosméticos", "Bioshark", "Espaço Laser", "Pipizito", "Petskin", "4Well", "Evoltenn"
+  { nome: "CIF",                   arquivo: "logos/cif.png" },
+  { nome: "La Cor Tricot",         arquivo: "logos/la-cor-tricot.png" },
+  { nome: "OMO",                   arquivo: "logos/omo.png" },
+  { nome: "Collum",                arquivo: "logos/collum.png" },
+  { nome: "Elseve",                arquivo: "logos/elseve.png" },
+  { nome: "Avène",                 arquivo: "logos/avene.png" },
+  { nome: "Sua Costura",           arquivo: "logos/sua-costura.png" },
+  { nome: "Serenature Cosméticos", arquivo: "logos/serenature.png" },
+  { nome: "Bioshark",              arquivo: "logos/bioshark.png" },
+  { nome: "Espaço Laser",          arquivo: "logos/espaco-laser.png" },
+  { nome: "Pipizito",              arquivo: "logos/pipizito.png" },
+  { nome: "Petskin",               arquivo: "logos/petskin.png" },
+  { nome: "4Well",                 arquivo: "logos/4well.png" },
+  { nome: "Evoltenn",              arquivo: "logos/evoltenn.png" }
 ];
 
 /* Três números da capa.
@@ -591,9 +625,21 @@ function numeroHTML(m) {
   return '<span class="contador" data-alvo="' + m.valor + '" data-prefixo="' + esc(m.prefixo) + '" data-sufixo="' + esc(m.sufixo) + '">' + esc(m.prefixo) + "0" + esc(m.sufixo) + "</span>";
 }
 
-/* Faixa de marcas (duplicada para rolar sem emenda) */
-const listaMarcas = marcas.map((m) => "<span>" + esc(m) + "</span>").join("");
-$("#trilho-marcas").innerHTML = listaMarcas + '<span aria-hidden="true" style="display:contents">' + marcas.map((m) => "<span>" + esc(m) + "</span>").join("") + "</span>";
+/* Faixa de logos: a lista é repetida para rolar sem emenda (só quando a animação está ligada) */
+function criarLogo(marca, escondida) {
+  const item = document.createElement("span");
+  item.className = "logo-item";
+  if (escondida) item.setAttribute("aria-hidden", "true");
+  const img = document.createElement("img");
+  img.src = marca.arquivo;
+  img.alt = escondida ? "" : "Logo " + marca.nome;
+  img.addEventListener("error", () => { item.textContent = marca.nome; item.classList.add("logo-sem-imagem"); });
+  item.appendChild(img);
+  return item;
+}
+const trilhoLogos = $("#trilho-logos");
+marcas.forEach((m) => trilhoLogos.appendChild(criarLogo(m, false)));
+if (!reduzMovimento) marcas.forEach((m) => trilhoLogos.appendChild(criarLogo(m, true)));
 
 /* Números da capa */
 $("#numeros-capa").innerHTML = numerosCapa.map((n) => "<div><strong>" + numeroHTML(n) + "</strong><span>" + esc(n.rotulo) + "</span></div>").join("");
