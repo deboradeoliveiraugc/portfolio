@@ -316,8 +316,6 @@
           <a href="#contato" class="btn btn-principal">Falar comigo</a>
           <a href="#trabalhos" class="btn btn-contorno">Ver os trabalhos</a>
         </div>
-        <!-- Os três números da capa vêm do array "numerosCapa" no script -->
-        <div class="numeros-capa" id="numeros-capa"></div>
       </div>
 
       <div class="foto-capa-wrap revelar">
@@ -645,7 +643,6 @@ marcas.forEach((m) => trilhoLogos.appendChild(criarLogo(m, false)));
 if (!reduzMovimento) marcas.forEach((m) => trilhoLogos.appendChild(criarLogo(m, true)));
 
 /* Números da capa */
-$("#numeros-capa").innerHTML = numerosCapa.map((n) => "<div><strong>" + numeroHTML(n) + "</strong><span>" + esc(n.rotulo) + "</span></div>").join("");
 
 /* Destaques */
 $("#lista-destaques").innerHTML = destaques.map((d, i) => {
