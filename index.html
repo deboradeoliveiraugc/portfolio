@@ -95,6 +95,10 @@
   .numeros-capa div > span{font-size:.85rem;color:var(--texto-suave);font-weight:600}
   .foto-capa-wrap{position:relative}
   .foto-capa{aspect-ratio:4/5;box-shadow:var(--sombra-forte)}
+  .foto-capa img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .foto-capa .olho-piscando{position:absolute;left:50.3%;top:36%;width:7%;height:3.4%;transform:translate(-50%,-50%) scaleY(0);border-radius:50%;background:#d4a08a;animation:piscar-olho 5s ease-in-out infinite}
+  @keyframes piscar-olho{0%,90%,100%{transform:translate(-50%,-50%) scaleY(0)}93%{transform:translate(-50%,-50%) scaleY(1)}96%{transform:translate(-50%,-50%) scaleY(0)}}
+  @media (prefers-reduced-motion:reduce){.foto-capa .olho-piscando{animation:none}}
   .selo-novo{position:absolute;top:-18px;right:-12px;width:96px;height:96px;border-radius:50%;background:var(--musgo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;box-shadow:var(--sombra);transform:rotate(12deg);border:3px dashed rgba(255,255,255,.45)}
   .etiqueta-capa{position:absolute;left:-18px;bottom:40px;background:#fff;border-radius:var(--raio-sm);padding:12px 16px;box-shadow:var(--sombra-forte);font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:10px}
   .etiqueta-capa .estrelas{color:#e8a500}
@@ -320,7 +324,8 @@
              <img src="foto-capa.jpg" alt="Débora de Oliveira segurando um produto e sorrindo">
              (salve a foto na mesma pasta do index.html, formato 4:5, de preferência em .webp ou .jpg com menos de 300 KB) -->
         <div class="midia foto-capa" role="img" aria-label="Foto da creator Débora de Oliveira">
-          <span class="legenda-midia">foto da creator 4:5</span>
+          <img src="foto-capa.jpg" alt="Débora de Oliveira sorrindo">
+          <span class="olho-piscando" aria-hidden="true"></span>
         </div>
         <span class="selo-novo" aria-hidden="true">novo</span>
         <div class="etiqueta-capa"><span class="estrelas" aria-hidden="true">★★★★★</span> Agenda aberta para marcas</div>
