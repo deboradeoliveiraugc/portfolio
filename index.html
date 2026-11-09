@@ -818,9 +818,9 @@ $("#form-captura").addEventListener("submit", (e) => {
   var ctx = c.getContext('2d', { willReadFrequently: true });
   function quadro() {
     if (v.readyState >= 2 && v.videoWidth) {
-      if (c.width !== 400) {
-        c.width = 400;
-        c.height = Math.round(400 * v.videoHeight / v.videoWidth);
+      if (c.width !== 800) {
+        c.width = 800;
+        c.height = Math.round(800 * v.videoHeight / v.videoWidth);
       }
       ctx.drawImage(v, 0, 0, c.width, c.height);
       var d = ctx.getImageData(0, 0, c.width, c.height);
