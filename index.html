@@ -94,8 +94,8 @@
   .numeros-capa strong{display:block;font-size:1.6rem;font-weight:800;color:var(--terracota);line-height:1.1}
   .numeros-capa div > span{font-size:.85rem;color:var(--texto-suave);font-weight:600}
   .foto-capa-wrap{position:relative;order:-1}
-  .foto-capa{aspect-ratio:auto;background:none;box-shadow:none;border-radius:0;overflow:visible}
-  .foto-capa img{display:block;width:100%;height:auto;transform-origin:50% 100%;animation:foto-entrar 3s cubic-bezier(.2,.7,.2,1) both}
+  .foto-capa{aspect-ratio:4/5;background:none;box-shadow:none;border-radius:0;overflow:visible}
+  .foto-capa img{position:absolute;left:-15%;bottom:0;width:130%;height:auto;display:block;transform-origin:50% 100%;animation:foto-entrar 3s cubic-bezier(.2,.7,.2,1) both}
   @keyframes foto-entrar{from{transform:scale(1.22);opacity:0}to{transform:scale(1);opacity:1}}
   @media (prefers-reduced-motion:reduce){.foto-capa img{animation:none}}
   .selo-novo{position:absolute;top:-18px;right:-12px;width:96px;height:96px;border-radius:50%;background:var(--musgo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;box-shadow:var(--sombra);transform:rotate(12deg);border:3px dashed rgba(255,255,255,.45)}
@@ -323,7 +323,7 @@
              <img src="foto-capa.jpg" alt="Débora de Oliveira segurando um produto e sorrindo">
              (salve a foto na mesma pasta do index.html, formato 4:5, de preferência em .webp ou .jpg com menos de 300 KB) -->
         <div class="midia foto-capa" role="img" aria-label="Débora de Oliveira sorrindo">
-          <img src="foto-capa.webp" alt="Débora de Oliveira sorrindo">
+          <img src="foto-capa.png" alt="Débora de Oliveira sorrindo">
         </div>
         <div class="etiqueta-capa"><span class="estrelas" aria-hidden="true">★★★★★</span> Agenda aberta para marcas</div>
       </div>
