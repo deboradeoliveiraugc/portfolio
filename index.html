@@ -95,7 +95,8 @@
   .numeros-capa div > span{font-size:.85rem;color:var(--texto-suave);font-weight:600}
   .foto-capa-wrap{position:relative}
   .foto-capa{aspect-ratio:4/5;background:none;box-shadow:none;border-radius:0}
-  .foto-capa video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+  .foto-capa video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+  .foto-capa canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .selo-novo{position:absolute;top:-18px;right:-12px;width:96px;height:96px;border-radius:50%;background:var(--musgo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;box-shadow:var(--sombra);transform:rotate(12deg);border:3px dashed rgba(255,255,255,.45)}
   .etiqueta-capa{position:absolute;left:-18px;bottom:40px;background:#fff;border-radius:var(--raio-sm);padding:12px 16px;box-shadow:var(--sombra-forte);font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:10px}
   .etiqueta-capa .estrelas{color:#e8a500}
@@ -806,6 +807,35 @@ $("#form-captura").addEventListener("submit", (e) => {
   $("#captura-conteudo").innerHTML = '<div class="confirmacao ativa" role="status"><div class="check" aria-hidden="true">✓</div><h2>Prontinho!</h2><p>Seu mídia kit vai chegar no e-mail informado. Obrigada pelo interesse!</p></div>';
   $("#fechar-captura").focus();
 });
+</script>
+<script>
+/* Remove o fundo branco do vídeo da capa (pixels quase brancos ficam transparentes) */
+(function () {
+  var v = document.querySelector('.foto-capa video');
+  if (!v || !v.parentNode || !window.requestAnimationFrame) return;
+  var c = document.createElement('canvas');
+  v.parentNode.appendChild(c);
+  var ctx = c.getContext('2d', { willReadFrequently: true });
+  function quadro() {
+    if (v.readyState >= 2 && v.videoWidth) {
+      if (c.width !== 400) {
+        c.width = 400;
+        c.height = Math.round(400 * v.videoHeight / v.videoWidth);
+      }
+      ctx.drawImage(v, 0, 0, c.width, c.height);
+      var d = ctx.getImageData(0, 0, c.width, c.height);
+      var p = d.data;
+      for (var i = 0; i < p.length; i += 4) {
+        var m = Math.min(p[i], p[i + 1], p[i + 2]);
+        if (m >= 240) p[i + 3] = 0;
+        else if (m >= 220) p[i + 3] = Math.round((240 - m) / 20 * 255);
+      }
+      ctx.putImageData(d, 0, 0);
+    }
+    requestAnimationFrame(quadro);
+  }
+  quadro();
+})();
 </script>
 </body>
 </html>
