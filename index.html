@@ -94,9 +94,8 @@
   .numeros-capa strong{display:block;font-size:1.6rem;font-weight:800;color:var(--terracota);line-height:1.1}
   .numeros-capa div > span{font-size:.85rem;color:var(--texto-suave);font-weight:600}
   .foto-capa-wrap{position:relative}
-  .foto-capa{aspect-ratio:4/5;background:none;box-shadow:none;border-radius:0}
-  .foto-capa video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
-  .foto-capa canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .foto-capa{aspect-ratio:4/5;background:none;box-shadow:none;border-radius:0;overflow:visible}
+  .foto-capa img{position:absolute;left:-6%;bottom:0;width:112%;height:auto;display:block}
   .selo-novo{position:absolute;top:-18px;right:-12px;width:96px;height:96px;border-radius:50%;background:var(--musgo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;box-shadow:var(--sombra);transform:rotate(12deg);border:3px dashed rgba(255,255,255,.45)}
   .etiqueta-capa{position:absolute;left:-18px;bottom:40px;background:#fff;border-radius:var(--raio-sm);padding:12px 16px;box-shadow:var(--sombra-forte);font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:10px}
   .etiqueta-capa .estrelas{color:#e8a500}
@@ -321,8 +320,8 @@
         <!-- FOTO DA CAPA: para trocar pela foto real, coloque dentro desta div:
              <img src="foto-capa.jpg" alt="Débora de Oliveira segurando um produto e sorrindo">
              (salve a foto na mesma pasta do index.html, formato 4:5, de preferência em .webp ou .jpg com menos de 300 KB) -->
-        <div class="midia foto-capa" role="img" aria-label="Débora de Oliveira sorrindo, com uma piscadinha">
-          <video src="foto-capa-2.mp4" poster="foto-capa.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+        <div class="midia foto-capa" role="img" aria-label="Débora de Oliveira sorrindo">
+          <img src="foto-capa.png" alt="Débora de Oliveira sorrindo">
         </div>
         <div class="etiqueta-capa"><span class="estrelas" aria-hidden="true">★★★★★</span> Agenda aberta para marcas</div>
       </div>
@@ -807,35 +806,6 @@ $("#form-captura").addEventListener("submit", (e) => {
   $("#captura-conteudo").innerHTML = '<div class="confirmacao ativa" role="status"><div class="check" aria-hidden="true">✓</div><h2>Prontinho!</h2><p>Seu mídia kit vai chegar no e-mail informado. Obrigada pelo interesse!</p></div>';
   $("#fechar-captura").focus();
 });
-</script>
-<script>
-/* Remove o fundo branco do vídeo da capa (pixels quase brancos ficam transparentes) */
-(function () {
-  var v = document.querySelector('.foto-capa video');
-  if (!v || !v.parentNode || !window.requestAnimationFrame) return;
-  var c = document.createElement('canvas');
-  v.parentNode.appendChild(c);
-  var ctx = c.getContext('2d', { willReadFrequently: true });
-  function quadro() {
-    if (v.readyState >= 2 && v.videoWidth) {
-      if (c.width !== 800) {
-        c.width = 800;
-        c.height = Math.round(800 * v.videoHeight / v.videoWidth);
-      }
-      ctx.drawImage(v, 0, 0, c.width, c.height);
-      var d = ctx.getImageData(0, 0, c.width, c.height);
-      var p = d.data;
-      for (var i = 0; i < p.length; i += 4) {
-        var m = Math.min(p[i], p[i + 1], p[i + 2]);
-        if (m >= 240) p[i + 3] = 0;
-        else if (m >= 220) p[i + 3] = Math.round((240 - m) / 20 * 255);
-      }
-      ctx.putImageData(d, 0, 0);
-    }
-    requestAnimationFrame(quadro);
-  }
-  quadro();
-})();
 </script>
 </body>
 </html>
